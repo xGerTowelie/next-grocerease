@@ -9,192 +9,102 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      base_position: {
+      recepies: {
         Row: {
           created_at: string
-          date: string | null
           id: string
-          report_id: string
-          title: string
-          total_cost: number
-          type: Database["public"]["Enums"]["position_type"]
-          updated_at: string
+          ingredients: string
+          name: string
         }
         Insert: {
           created_at?: string
-          date?: string | null
           id?: string
-          report_id: string
-          title?: string
-          total_cost?: number
-          type?: Database["public"]["Enums"]["position_type"]
-          updated_at?: string
+          ingredients?: string
+          name: string
         }
         Update: {
           created_at?: string
-          date?: string | null
           id?: string
-          report_id?: string
-          title?: string
-          total_cost?: number
-          type?: Database["public"]["Enums"]["position_type"]
-          updated_at?: string
+          ingredients?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      recepies_ingredients: {
+        Row: {
+          created_at: string
+          id: string
+          ingredient: string | null
+          recepie: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          ingredient?: string | null
+          recepie?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          ingredient?: string | null
+          recepie?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "base_position_report_id_fkey"
-            columns: ["report_id"]
+            foreignKeyName: "recepies_ingredients_ingredient_fkey"
+            columns: ["ingredient"]
             isOneToOne: false
-            referencedRelation: "report"
+            referencedRelation: "shopping_items"
             referencedColumns: ["id"]
           },
-        ]
-      }
-      bill_position: {
-        Row: {
-          base_position_id: string
-          created_at: string
-          id: string
-          image_url: string | null
-          updated_at: string
-        }
-        Insert: {
-          base_position_id: string
-          created_at?: string
-          id?: string
-          image_url?: string | null
-          updated_at?: string
-        }
-        Update: {
-          base_position_id?: string
-          created_at?: string
-          id?: string
-          image_url?: string | null
-          updated_at?: string
-        }
-        Relationships: [
           {
-            foreignKeyName: "bill_position_base_position_id_fkey"
-            columns: ["base_position_id"]
-            isOneToOne: true
-            referencedRelation: "base_position"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      report: {
-        Row: {
-          assignee_id: string | null
-          created_at: string
-          creator_id: string
-          date: string | null
-          id: string
-          status: Database["public"]["Enums"]["report_status"]
-          updated_at: string
-        }
-        Insert: {
-          assignee_id?: string | null
-          created_at?: string
-          creator_id?: string
-          date?: string | null
-          id?: string
-          status?: Database["public"]["Enums"]["report_status"]
-          updated_at?: string
-        }
-        Update: {
-          assignee_id?: string | null
-          created_at?: string
-          creator_id?: string
-          date?: string | null
-          id?: string
-          status?: Database["public"]["Enums"]["report_status"]
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "report_assignee_id_fkey"
-            columns: ["assignee_id"]
+            foreignKeyName: "recepies_ingredients_recepie_fkey"
+            columns: ["recepie"]
             isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "report_creator_id_fkey"
-            columns: ["creator_id"]
-            isOneToOne: false
-            referencedRelation: "users"
+            referencedRelation: "recepies"
             referencedColumns: ["id"]
           },
         ]
       }
-      travel_position: {
+      shopping_items: {
         Row: {
-          base_position_id: string
-          cost: number
           created_at: string
-          distance: number
           id: string
-          is_full_day: boolean
-          updated_at: string
+          name: string
+          order: number | null
+          type: Database["public"]["Enums"]["shopping_item_types"] | null
         }
         Insert: {
-          base_position_id: string
-          cost?: number
           created_at?: string
-          distance?: number
           id?: string
-          is_full_day?: boolean
-          updated_at?: string
+          name: string
+          order?: number | null
+          type?: Database["public"]["Enums"]["shopping_item_types"] | null
         }
         Update: {
-          base_position_id?: string
-          cost?: number
           created_at?: string
-          distance?: number
           id?: string
-          is_full_day?: boolean
-          updated_at?: string
+          name?: string
+          order?: number | null
+          type?: Database["public"]["Enums"]["shopping_item_types"] | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "travel_position_base_position_id_fkey"
-            columns: ["base_position_id"]
-            isOneToOne: true
-            referencedRelation: "base_position"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
-      users: {
+      shopping_stores: {
         Row: {
-          avatar_url: string | null
-          company: Database["public"]["Enums"]["company"]
-          country: Database["public"]["Enums"]["country"]
-          created_at: string | null
-          email: string
-          full_name: string
-          id: string
-          updated_at: string
+          created_at: string
+          id: number
+          name: string
         }
         Insert: {
-          avatar_url?: string | null
-          company?: Database["public"]["Enums"]["company"]
-          country?: Database["public"]["Enums"]["country"]
-          created_at?: string | null
-          email: string
-          full_name: string
-          id: string
-          updated_at?: string
+          created_at?: string
+          id?: number
+          name: string
         }
         Update: {
-          avatar_url?: string | null
-          company?: Database["public"]["Enums"]["company"]
-          country?: Database["public"]["Enums"]["country"]
-          created_at?: string | null
-          email?: string
-          full_name?: string
-          id?: string
-          updated_at?: string
+          created_at?: string
+          id?: number
+          name?: string
         }
         Relationships: []
       }
@@ -203,23 +113,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      create_updated_at_trigger: {
-        Args: {
-          table_name: string
-        }
-        Returns: undefined
-      }
+      [_ in never]: never
     }
     Enums: {
-      company: "LIT_BERATUNG_GMBH" | "LIT_SOFTWARE_GMBH"
-      country: "GERMANY" | "AUSTRIA" | "SWITZERLAND"
-      position_type: "TRAVEL" | "BILL"
-      report_status:
-        | "DRAFT"
-        | "WAITING_FOR_REVIEW"
-        | "IN_REVIEW"
-        | "REJECTED"
-        | "ACCEPTED"
+      shopping_item_types: "Lebensmittel" | "Trinken" | "Haushalt" | "Katzen"
     }
     CompositeTypes: {
       [_ in never]: never
