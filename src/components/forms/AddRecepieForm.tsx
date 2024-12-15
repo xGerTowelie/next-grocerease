@@ -4,23 +4,21 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useState } from "react";
-import { createItem } from "@/actions/items";
+import { createRecepie } from "@/actions/recepies";
 
-export default function AddItemForm() {
+export default function AddRecepieForm() {
     const [name, setName] = useState("")
 
     const handleSubmit = async () => {
-        await createItem({
+        await createRecepie({
             name: name,
-            order: 1000,
-            type: 'Lebensmittel'
         }, ['/items'])
     }
 
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Add a new Item</CardTitle>
+                <CardTitle>Add a new Recepie</CardTitle>
             </CardHeader>
             <CardContent>
                 <Input value={name} onChange={e => setName(e.currentTarget.value)} />
