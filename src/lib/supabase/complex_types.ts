@@ -23,41 +23,19 @@ export type EnsureAll<T extends string, U extends Record<T, string>> = {
 export type RevalidationPaths = null | string | string[]
 
 export type DBResult<T> = Promise<{ data: T | null; error: Error | null }>
-/*
- * NOTE: Auth
- */
 
-export type User = Tables<'users'>
-export type Companies = Database["public"]["Enums"]["company"];
-export type Countries = Database["public"]["Enums"]["country"];
 
 /*
- * NOTE: Reports
+ * NOTE: Items
  */
 
-export type Report = Tables<'report'>;
-
-export type ReportWithUsers = Report & {
-    creator: {
-        full_name: string
-    } | null,
-    assignee: {
-        full_name: string
-    } | null,
-}
-
-export type ReportStatus = Database['public']['Enums']['report_status']
+export type Item = Tables<'shopping_items'>;
+export type ItemType = Database['public']['Enums']['shopping_item_types']
 
 /*
- * NOTE: Positions
+ * NOTE: Recepies
  */
 
-export type Position = BillPosition | TravelPosition;
-
-export type PositionTypes = Database['public']['Enums']['position_type']
-
-export type BasePosition = Tables<'base_position'> & { type: PositionTypes };
-export type BillPosition = BasePosition & { type: ValidateLiteral<PositionTypes, 'BILL'> } & Tables<'bill_position'>;
-export type TravelPosition = BasePosition & { type: ValidateLiteral<PositionTypes, 'TRAVEL'> } & Tables<'travel_position'>;
+export type Recepie = Tables<'recepies'>;
 
 
