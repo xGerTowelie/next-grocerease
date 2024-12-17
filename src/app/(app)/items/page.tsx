@@ -1,41 +1,34 @@
-import { getItems } from "@/actions/items";
-import AddItemForm from "@/components/forms/AddItemForm";
-import { Card, CardContent } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-import { Item } from "@/lib/supabase/complex_types";
-import { notFound } from "next/navigation";
+import { getItems } from "@/actions/items"
+import DebugState from "@/components/DebugState"
+import AddItemForm from "@/components/forms/AddItemForm"
+import ItemList from "@/components/ItemList"
+import { SkeletonItemsList } from "@/components/skeltons/SkeletonItemsList"
+import { Suspense } from "react"
 
 export default async function ItemsPage() {
-    const { data: items, error } = await getItems()
-
-    if (error) {
-        throw error
-    }
-
-    if (!items) {
-        notFound()
-    }
-
     return (
-        <div className="space-y-3">
-            <h1>items</h1>
+        <div className="container mx-auto py-10 space-y-5">
             <AddItemForm />
-
-            <Card>
-                <CardContent>
-                    <Table>
-                        <TableBody>
-                            {items.map((item: Item) => (
-                                <TableRow key={item.id}>
-                                    <TableCell>{item.name}</TableCell>
-                                    <TableCell>{item.type}</TableCell>
-                                    <TableCell>{item.order}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </CardContent>
-            </Card>
+            <div>
+                <h1 className="pt-10 pb-5 pl-2 text-xl font-sans font-semibold">All Items</h1>
+                <Suspense fallback={<SkeletonItemsList />}>
+                    <ItemsWrapper />
+                </Suspense>
+            </div>
         </div>
     )
 }
+
+async function ItemsWrapper() {
+    const items = await getItems()
+
+    console.log("items", items)
+
+    return (
+        <div className="space-y-5">
+            <DebugState state={items} title="Items Page" />
+            <ItemList items={items.data || []} />
+        </div>
+    )
+}
+

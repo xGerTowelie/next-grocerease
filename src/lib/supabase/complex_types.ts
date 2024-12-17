@@ -34,7 +34,7 @@ export type Store = Tables<'stores'>;
  * NOTE: Items
  */
 
-export type Item = Tables<'shopping_items'>;
+export type Item = Tables<'item'>;
 export type ItemTypeEnum = Database['public']['Enums']['shopping_item_types']
 export type ItemType = Tables<'types'>;
 

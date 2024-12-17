@@ -5,15 +5,28 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import { createItem } from "@/actions/items";
+import { SearchableSelect } from "../SearchableSelect";
 
 export default function AddItemForm() {
     const [name, setName] = useState("")
 
+    const options = {
+        apple: "Apple",
+        banana: "Banana",
+        cherry: "Cherry",
+        date: "Date",
+        elderberry: "Elderberry",
+        fig: "Fig",
+        grape: "Grape",
+    }
+
+
     const handleSubmit = async () => {
         await createItem({
             name: name,
-            order: 1000,
-            type: 'Lebensmittel'
+            type_id: "",
+            store_id: "",
+            is_favorite: false
         }, ['/items'])
     }
 
@@ -24,6 +37,11 @@ export default function AddItemForm() {
             </CardHeader>
             <CardContent>
                 <Input value={name} onChange={e => setName(e.currentTarget.value)} />
+                <SearchableSelect
+                    options={options}
+                    onChange={(value) => console.log("Selected:", value)}
+                    placeholder="Select..."
+                />
             </CardContent>
             <CardFooter>
                 <Button onClick={handleSubmit}>Add</Button>

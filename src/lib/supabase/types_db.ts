@@ -9,6 +9,51 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      item: {
+        Row: {
+          created_at: string
+          id: string
+          is_favorite: boolean
+          last_bought: string | null
+          name: string | null
+          store_id: string
+          type_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_favorite?: boolean
+          last_bought?: string | null
+          name?: string | null
+          store_id: string
+          type_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_favorite?: boolean
+          last_bought?: string | null
+          name?: string | null
+          store_id?: string
+          type_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "item_store_id_fkey"
+            columns: ["store_id"]
+            isOneToOne: false
+            referencedRelation: "stores"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "item_type_id_fkey"
+            columns: ["type_id"]
+            isOneToOne: false
+            referencedRelation: "types"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       recepies: {
         Row: {
           created_at: string

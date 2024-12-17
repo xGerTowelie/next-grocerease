@@ -4,11 +4,11 @@ import { DBResult, Item, RevalidationPaths } from "@/lib/supabase/complex_types"
 import { createClient } from "@/lib/supabase/server";
 import { revalidateAll } from "@/lib/utils";
 
-export async function createItem(itemData: Omit<Item, 'id' | 'created_at'>, revalidatePaths: RevalidationPaths): DBResult<Item> {
+export async function createItem(itemData: Omit<Item, 'id' | 'created_at' | 'last_bought'>, revalidatePaths: RevalidationPaths): DBResult<Item> {
     const supabase = await createClient()
 
     const result = await supabase
-        .from('shopping_items')
+        .from('item')
         .insert(itemData)
         .single();
 
@@ -19,7 +19,8 @@ export async function createItem(itemData: Omit<Item, 'id' | 'created_at'>, reva
 
 export async function getItems(): DBResult<Item[]> {
     return (await createClient())
-        .from('shopping_items')
+        .from('item')
         .select(`*`)
+        .order('name', { ascending: true })
 }
 
