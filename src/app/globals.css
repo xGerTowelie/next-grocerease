@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 body {
+  pointer-events: auto !important;
   font-family: Arial, Helvetica, sans-serif;
 }
 

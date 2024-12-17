@@ -17,16 +17,24 @@ import {
 } from "@/components/ui/popover"
 import { useSearchableSelect } from "@/hooks/use-searchable-select"
 
+interface SupabaseItem {
+    id: string
+    name: string
+    [key: string]: any  // Allow for other properties
+}
+
 interface SearchableSelectProps {
-    options: Record<string, string>
+    items: SupabaseItem[]
     onChange: (value: string) => void
     placeholder?: string
+    initialValue?: string
 }
 
 export function SearchableSelect({
-    options,
+    items,
     onChange,
     placeholder = "Select an item...",
+    initialValue,
 }: SearchableSelectProps) {
     const {
         open,
@@ -35,8 +43,8 @@ export function SearchableSelect({
         setValue,
         search,
         setSearch,
-        filteredOptions,
-    } = useSearchableSelect(options)
+        filteredItems,
+    } = useSearchableSelect(items, initialValue)
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
@@ -47,7 +55,7 @@ export function SearchableSelect({
                     aria-expanded={open}
                     className="w-full justify-between"
                 >
-                    {value ? options[value] : placeholder}
+                    {value ? items.find(item => item.id === value)?.name : placeholder}
                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
             </PopoverTrigger>
@@ -60,10 +68,10 @@ export function SearchableSelect({
                     />
                     <CommandEmpty>No item found.</CommandEmpty>
                     <CommandGroup>
-                        {filteredOptions.map(([key, label]) => (
+                        {filteredItems.map((item) => (
                             <CommandItem
-                                key={key}
-                                value={key}
+                                key={item.id}
+                                value={item.id}
                                 onSelect={(currentValue) => {
                                     setValue(currentValue === value ? "" : currentValue)
                                     onChange(currentValue)
@@ -73,10 +81,10 @@ export function SearchableSelect({
                                 <Check
                                     className={cn(
                                         "mr-2 h-4 w-4",
-                                        value === key ? "opacity-100" : "opacity-0"
+                                        value === item.id ? "opacity-100" : "opacity-0"
                                     )}
                                 />
-                                {label}
+                                {item.name}
                             </CommandItem>
                         ))}
                     </CommandGroup>

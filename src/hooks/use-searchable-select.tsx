@@ -1,17 +1,22 @@
 import { useState, useMemo } from 'react'
 
-export function useSearchableSelect(options: Record<string, string>) {
+interface SupabaseItem {
+    id: string
+    name: string
+    [key: string]: any  // Allow for other properties
+}
+
+export function useSearchableSelect(items: SupabaseItem[]) {
     const [open, setOpen] = useState(false)
     const [value, setValue] = useState<string>('')
     const [search, setSearch] = useState('')
 
-    const filteredOptions = useMemo(() => {
-        const entries = Object.entries(options)
-        if (!search) return entries
-        return entries.filter(([_, label]) =>
-            label.toLowerCase().includes(search.toLowerCase())
+    const filteredItems = useMemo(() => {
+        if (!search) return items
+        return items.filter((item) =>
+            item.name.toLowerCase().includes(search.toLowerCase())
         )
-    }, [options, search])
+    }, [items, search])
 
     return {
         open,
@@ -20,8 +25,7 @@ export function useSearchableSelect(options: Record<string, string>) {
         setValue,
         search,
         setSearch,
-        filteredOptions,
+        filteredItems,
     }
 }
-
 

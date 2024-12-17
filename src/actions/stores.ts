@@ -23,7 +23,6 @@ export async function createStore(storeData: Omit<Store, 'id' | 'created_at'>, r
 }
 
 export async function getStores(): DBResult<Store[]> {
-    await new Promise((resolve) => setTimeout(resolve, 5000))
     return (await createClient())
         .from('stores')
         .select(`*`)

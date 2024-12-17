@@ -81,7 +81,7 @@ export function Sidebar({ user }: { user: User }) {
                                     )}
                                 >
                                     <div className="pl-2 w-6 h-6 flex items-center justify-center">
-                                        <route.icon className="h-5 w-5 shrink-0" aria-hidden="true" />
+                                        <route.icon className="h-5 w-5 shrink-0" />
                                     </div>
                                     <AnimatePresence>
                                         {!isCollapsed && (

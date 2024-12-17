@@ -23,7 +23,6 @@ export async function createItemType(typeData: Omit<ItemType, 'id' | 'created_at
 }
 
 export async function getItemTypes(): DBResult<ItemType[]> {
-    await new Promise((resolve) => setTimeout(resolve, 5000))
     return (await createClient())
         .from('types')
         .select(`*`)
