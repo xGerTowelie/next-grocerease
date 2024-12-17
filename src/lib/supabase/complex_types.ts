@@ -24,13 +24,19 @@ export type RevalidationPaths = null | string | string[]
 
 export type DBResult<T> = Promise<{ data: T | null; error: Error | null }>
 
+/*
+ * NOTE: Stores
+ */
+
+export type Store = Tables<'stores'>;
 
 /*
  * NOTE: Items
  */
 
 export type Item = Tables<'shopping_items'>;
-export type ItemType = Database['public']['Enums']['shopping_item_types']
+export type ItemTypeEnum = Database['public']['Enums']['shopping_item_types']
+export type ItemType = Tables<'types'>;
 
 /*
  * NOTE: Recepies

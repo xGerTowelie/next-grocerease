@@ -1,6 +1,6 @@
 import { getItems } from "@/actions/items";
 import AddItemForm from "@/components/forms/AddItemForm";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Item } from "@/lib/supabase/complex_types";
 import { notFound } from "next/navigation";
