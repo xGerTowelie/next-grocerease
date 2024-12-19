@@ -1,6 +1,5 @@
 import { getRecepies } from "@/actions/recepies"
 import AddRecepieForm from "@/components/forms/AddRecepieForm"
-import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table"
 import { Recepie } from "@/lib/supabase/complex_types"
@@ -21,7 +20,6 @@ export default async function ItemsPage() {
 
     return (
         <div className="space-y-3">
-            <h1>items</h1>
             <AddRecepieForm />
 
             <Card>

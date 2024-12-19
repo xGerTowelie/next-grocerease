@@ -14,7 +14,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         <header className="bg-background border-b-2 border-black p-4">
                             <Breadcrumb />
                         </header>
-                        {children}
+                        <section className="px-10 py-5">
+                            {children}
+                        </section>
                     </main>
                 </SidebarProvider>
             </body>

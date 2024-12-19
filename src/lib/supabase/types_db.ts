@@ -13,27 +13,33 @@ export type Database = {
         Row: {
           created_at: string
           id: string
+          image_url: string
           is_favorite: boolean
           last_bought: string | null
           name: string | null
+          next_shopping: boolean
           store_id: string
           type_id: string
         }
         Insert: {
           created_at?: string
           id?: string
+          image_url?: string
           is_favorite?: boolean
           last_bought?: string | null
           name?: string | null
+          next_shopping?: boolean
           store_id: string
           type_id: string
         }
         Update: {
           created_at?: string
           id?: string
+          image_url?: string
           is_favorite?: boolean
           last_bought?: string | null
           name?: string | null
+          next_shopping?: boolean
           store_id?: string
           type_id?: string
         }
