@@ -42,6 +42,6 @@ export async function signInWithKeycloak() {
 export async function signOut() {
     const supabase = createClient();
     await supabase.auth.signOut()
-    redirect('/login')
+    redirect('/')
 }
 
